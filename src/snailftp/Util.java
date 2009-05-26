@@ -130,6 +130,7 @@ public final class Util {
     }
     
     public static InetAddress getLocalAddress(){
+    		//TODO this code con't work in Linux
             try{
                 Enumeration<NetworkInterface> networkInterfaceEnumeration = NetworkInterface.getNetworkInterfaces();
                 while (networkInterfaceEnumeration.hasMoreElements()) {
