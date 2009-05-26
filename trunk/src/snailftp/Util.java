@@ -131,13 +131,20 @@ public final class Util {
     
     public static InetAddress getLocalAddress(){
             try{
-	         return InetAddress.getLocalHost();
+                Enumeration<NetworkInterface> networkInterfaceEnumeration = NetworkInterface.getNetworkInterfaces();
+                while (networkInterfaceEnumeration.hasMoreElements()) {
+                    NetworkInterface networkInterface = networkInterfaceEnumeration.nextElement();
+                    if(networkInterface.isLoopback() || !networkInterface.isUp()){
+                        continue;
+                    }
+                    Enumeration<InetAddress> inetAddressEnumeration = networkInterface.getInetAddresses();
+                    while(inetAddressEnumeration.hasMoreElements()){
+                        return inetAddressEnumeration.nextElement();
+                    }
+                }
+                return InetAddress.getLocalHost();
             }catch(Exception exc){
                 return null;
             }
-    }
-
-    public static void main(String[] args){
-         System.out.println(Util.getLocalAddress());
     }
 }
