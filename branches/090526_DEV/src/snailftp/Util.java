@@ -135,12 +135,12 @@ public final class Util {
                 Enumeration<NetworkInterface> networkInterfaceEnumeration = NetworkInterface.getNetworkInterfaces();
                 while (networkInterfaceEnumeration.hasMoreElements()) {
                     NetworkInterface networkInterface = networkInterfaceEnumeration.nextElement();
-                    if(networkInterface.isLoopback() || !networkInterface.isUp()){
-                        continue;
-                    }
                     Enumeration<InetAddress> inetAddressEnumeration = networkInterface.getInetAddresses();
                     while(inetAddressEnumeration.hasMoreElements()){
-                        return inetAddressEnumeration.nextElement();
+		    	InetAddress address = inetAddressEnumeration.nextElement();
+		    	if(address instanceof Inet4Address && !address.isLoopbackAddress()){
+				return address;
+			}
                     }
                 }
                 return InetAddress.getLocalHost();
