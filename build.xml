@@ -15,6 +15,11 @@
   <target name="compile" depends="init"
         description="compile the source " >
     <javac srcdir="${src}" encoding="utf-8" destdir="${build}"/>
+    <copy todir="${build}">
+    	<fileset dir="${src}">
+		<exclude name="**/*.java"/>
+	</fileset>
+    </copy>
   </target>
 
   <target name="dist" depends="compile"
